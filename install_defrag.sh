@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $EUID -eq 0 ]]; then
-    echo "This script should NOT be run as root !!"
+    echo "This script should NOT be run as root !!" 
     exit 1
 fi
 
@@ -10,8 +10,7 @@ echo "Creating the required folders within $installdir ..."
 basedir="$installdir/game"
 tmpdir="/tmp/defraginstall"
 
-# Setup the nfs within the baseq3 subfolder
-mkdir -p $basedir/baseq3/maps
+# Setup the nfs subfolder
 mkdir -p $basedir/nfs/maps
 
 echo "Creating a temporary folder in /tmp/defraginstall for downloading assets..."
