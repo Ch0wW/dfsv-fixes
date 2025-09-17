@@ -26,15 +26,16 @@ Options:
 - `ssh root@ipofyourinstance`
 - Enter the password, proceed to next section.
 
-**Deploying the servers (Native/No-Docker)**
-1. In your linux system, execute the following lines
-- `git clone https://github.com/neyoneit/dfsv.git -b nodocker`
-- `cd dfsv`
-- `sudo ./install.sh`
-- `./launch-native.sh`
-2. Follow the instructions on the command line
-3. Check running servers with `ps aux | grep oDFe.ded`
-4. Connect to `your instance's ip:port` through a defrag client
+## Deploying the servers (Native/No-Docker Method) - ADVANCED METHOD
+
+1. Create a regular user called `q3df` (**very important**) 
+2. As root, run `./install.sh` to install all required packages 
+3. As root, copy `home-q3df-game-nfs-maps.mount` to `/etc/systemd/system/`
+4. As root, `systemctl enable home-q3df-game-nfs-maps.mount` and `systemctl start home-q3df-game-nfs-maps.mount`
+5. As `q3df`, run `./install_defrag.sh` 
+6. Configure `sv.conf` to your liking.
+7. Once done, run `./start-servers.sh`.
+8. Connect to `your instance's ip:port` through a defrag client
 
 **Customization**
 1. ssh into your instance
@@ -49,7 +50,10 @@ Options:
 9. rerun `./launch-native.sh` and to apply changes
 10. run `ps aux | grep oDFe.ded` to see your running servers and their ports
 
-**Uploading maps**
+
+
+
+### Uploading maps
 
 After following the previous steps, you will have all current maps on ws.q3df.org available on your server. However, if you'd like to upload custom maps or maps not present in world spawn, continue
 
@@ -66,7 +70,7 @@ From the instance OS:
 3. Restart your server from the game by callvoting the current map.
 4. Callvote your map
 
-**Quickly migrating to a new location while keeping settings**
+### Quickly migrating to a new location while keeping settings
 1. Once you have all your desired settings, you can create a snapshot for free (at the time of this writeup) on vultr.
 2. Click on the instance with all your settings
 3. Go to the 'snapshots' tab

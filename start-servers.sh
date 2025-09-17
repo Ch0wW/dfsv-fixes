@@ -19,20 +19,6 @@ printf "\nServer Hostname: $SV_BASE_HOSTNAME\nAdmin: $ADMIN_NAME\nRcon Password:
 
 echo "Setting up native server environment..."
 
-nfs_mountpoint="./game/nfs/maps"
-
-# Mount NFS maps if not already mounted
-if ! mountpoint -q $nfs_mountpoint; then
-    echo "Mounting NFS maps directory..."
-    sudo mkdir -p $nfs_mountpoint
-    sudo mount -t nfs -o nolock,soft,timeo=30 173.212.241.188:/maps/bsp $nfs_mountpoint
-    if [ $? -eq 0 ]; then
-        echo "NFS maps mounted successfully"
-    else
-        echo "Warning: Failed to mount NFS maps. Maps may not be available."
-    fi
-fi
-
 curr_port=27960
 echo "Starting servers natively..."
 
@@ -50,11 +36,11 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 		echo "Starting server: $curr_name on port $curr_port"
 
 		# Create server-specific directory
-		sudo mkdir -p game/defrag/$curr_name
-		sudo cp cfgs/${sv_type}.cfg game/defrag/$curr_name/main.cfg
+		mkdir -p game/defrag/$curr_name
+		cp game/defrag/cfgs/${sv_type}.cfg game/defrag/$curr_name/main.cfg
 
 		# Start the server in background
-		cd servers/base
+		cd game
 		export MDD_ENABLED=${MDD_ENABLED}
 		export RS_ID=${!curr_id}
 		export NAME_ID=${curr_name}
@@ -74,9 +60,7 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 
 		# Start server using existing start.sh script
 		screen -mdS "$sv_type-$i" ./start.sh
-		SERVER_PID=$!
-		echo "Server $curr_name started with PID $SERVER_PID"
-		echo $SERVER_PID > logs/${curr_name}.pid
+#		SERVER_PID=$!
 
 		cd ../..
 		curr_port=$(($curr_port+1))
