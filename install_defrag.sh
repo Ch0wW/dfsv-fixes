@@ -2,7 +2,7 @@
 
 if [[ $EUID -eq 0 ]]; then
     echo "This script should NOT be run as root !!"
-    quit
+    exit 1
 fi
 
 installdir=$(pwd)

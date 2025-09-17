@@ -2,7 +2,7 @@
 
 if [[ $EUID -ne 0 ]]; then
     echo "You need to run this script as root."
-    quit
+    exit 1
 fi
 
 echo "QUAKE 3: DEFRAG SERVER INSTALL"
