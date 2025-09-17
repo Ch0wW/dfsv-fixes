@@ -39,10 +39,17 @@ mv defrag/zz-* $basedir/defrag/
 echo "Downloading the community modules..."
 wget https://dl.defrag.racing/downloads/rs.tar
 tar -xvf rs.tar
-mv defrag/modules $basedir/defrag/ && mv defrag/qagame* $basedir/defrag/qagamei386.so
+
+# Move the modules subfolder...
+mv rs/defrag/modules $basedir/defrag/ 
+
+# And also the qagame binary.
+mv rs/defrag/qagame* $basedir/defrag/qagamei386.so
 
 cd $installdir
 rm -rf $tmpdir
 
 echo "Installation done!"
-echo "You can now edit sv.conf to your likings, and start start-servers.sh
+echo "You can now edit sv.conf to your likings, and start start-servers.sh"
+
+exit 0
