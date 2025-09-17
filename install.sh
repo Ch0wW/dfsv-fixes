@@ -14,7 +14,5 @@ apt update
 apt -y install libc6:i386 libstdc++6:i386 libgcc1:i386 libncurses5:i386 libtinfo5:i386 zlib1g:i386
 
 echo "Required packages installed!"
-echo "Don't forget to create a service to load the mounting file upon loading!"
-echo ""
 echo "Now, you can run ./install_defrag.sh as the non-root user to continue the installation."
 

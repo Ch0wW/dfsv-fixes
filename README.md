@@ -30,8 +30,8 @@ Options:
 
 1. Create a regular user called `q3df` (**very important**) 
 2. As root, run `./install.sh` to install all required packages 
-3. As root, copy `home-q3df-game-nfs-maps.mount` to `/etc/systemd/system/`
-4. As root, `systemctl enable home-q3df-game-nfs-maps.mount` and `systemctl start home-q3df-game-nfs-maps.mount`
+3. As root, copy `home-q3df-game-baseq3-maps.mount` to `/etc/systemd/system/`
+4. As root, `systemctl enable home-q3df-game-baseq3-maps.mount` and `systemctl start home-q3df-game-baseq3-maps.mount`
 5. As `q3df`, run `./install_defrag.sh` 
 6. Configure `sv.conf` to your liking.
 7. Once done, run `./start-servers.sh`.

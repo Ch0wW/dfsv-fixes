@@ -8,7 +8,7 @@ fi
 source sv.conf
 
 COUNTER=0
-echo "Checking `sv.conf` for required settings..."
+echo "Checking sv.conf for required settings..."
 for CONFIGURABLE in SV_BASE_HOSTNAME SV_RCON SV_LOCATION ADMIN_NAME; do
 	if [[ "${!CONFIGURABLE}" = "" ]]
 	then
@@ -59,7 +59,7 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 		export SV_PASSWORD=${SV_PASSWORD}
 
 		# Start server using existing start.sh script
-		screen -mdS "$sv_type-$i" ./start.sh
+		screen -mdS "${sv_type}-${i}" ./start.sh
 #		SERVER_PID=$!
 
 		cd ../..

@@ -10,9 +10,8 @@ echo "Creating the required folders within $installdir ..."
 basedir="$installdir/game"
 tmpdir="/tmp/defraginstall"
 
-# Setup the nfs within the gamefolder, so that it won't interfere with the baseq3 subfolder, in case of custom maps.
-mkdir -p $basedir/nfs/maps
-mkdir -p $basedir/baseq3
+# Setup the nfs within the baseq3 subfolder
+mkdir -p $basedir/baseq3/maps
 
 echo "Creating a temporary folder in /tmp/defraginstall for downloading assets..."
 mkdir -p $tmpdir && cd $tmpdir
@@ -27,6 +26,7 @@ mv dfsv/*.dat $basedir/ && mv dfsv/baseq3/* $basedir/baseq3
 echo "Downloading oDFe's binary"
 wget https://dl.defrag.racing/downloads/oDFe.ded
 mv oDFe.ded $basedir/
+chmod +x $basedir/oDFe.ded
 
 # get latest defrag version
 echo "Downloading the latest defrag mod-release..."

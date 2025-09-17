@@ -5,10 +5,10 @@ Wants=network-online.target
 
 [Service]
 Type=forking
-WorkingDirectory=/home/ubuntu/dfsv
-ExecStart=/home/ubuntu/dfsv/launch-native.sh
-ExecStop=/home/ubuntu/dfsv/stop-native.sh
-User=root
+WorkingDirectory=/home/q3df/dfsv
+ExecStart=/home/q3df/dfsv/start-servers.sh
+#ExecStop=/home/q3df/dfsv/stop-native.sh
+User=q3df
 Restart=on-failure
 RestartSec=5
 

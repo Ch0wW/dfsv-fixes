@@ -32,9 +32,9 @@ for pidfile in servers/base/logs/*.pid; do
 done
 
 # Unmount NFS if mounted
-if mountpoint -q ./nfs/maps; then
+if mountpoint -q ./game/baseq3/maps; then
     echo "Unmounting NFS maps directory..."
-    sudo umount ./nfs/maps
+    sudo umount ./game/baseq3/maps
     if [ $? -eq 0 ]; then
         echo "NFS maps unmounted successfully"
     else
