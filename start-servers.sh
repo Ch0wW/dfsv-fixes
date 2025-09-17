@@ -1,4 +1,4 @@
-#!/bin/bash
+à#!/bin/bash
 
 if [[ $EUID -eq 0 ]]; then
     echo "This script should NOT be run as root !!"
@@ -57,6 +57,7 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 		export SV_HOMEPAGE=${SV_HOMEPAGE}
 		export SV_PRIVATE=${SV_PRIVATE}
 		export SV_PASSWORD=${SV_PASSWORD}
+		export SV_CONFIG=${sv_type}
 
 		# Start server using existing start.sh script
 		screen -mdS "${sv_type}-${i}" ./start.sh
