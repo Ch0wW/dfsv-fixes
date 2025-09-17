@@ -78,9 +78,10 @@ SERVER_SETTINGS=(
         +set sv_levelTimeReset  "1"
         +set bot_enable         "0"
 
+        # Execing files (in order: Global DF settings, the gamemode setting, the server cfg)
         +exec                   "cfgs/global.cfg"
-        +exec                   "${NAME_ID}/main.cfg"
         +exec                   "cfgs/${SV_CONFIG}.cfg"
+        +exec                   "${NAME_ID}/main.cfg"
 
 )
 
