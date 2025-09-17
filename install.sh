@@ -1,3 +1,5 @@
+#!/bin/bash
+
 apt update && apt -y install unzip wget nano nfs-common
 dpkg --add-architecture i386
 apt update
