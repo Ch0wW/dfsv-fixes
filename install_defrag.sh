@@ -12,6 +12,7 @@ tmpdir="/tmp/defraginstall"
 
 # Setup the nfs within the baseq3 subfolder
 mkdir -p $basedir/baseq3/maps
+mkdir -p $basedir/nfs/maps
 
 echo "Creating a temporary folder in /tmp/defraginstall for downloading assets..."
 mkdir -p $tmpdir && cd $tmpdir
