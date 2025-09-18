@@ -30,12 +30,30 @@ Options:
 
 1. Create a regular user called `q3df` (**very important**) 
 2. As root, run `./install.sh` to install all required packages 
-3. As root, copy `home-q3df-game-nfs-maps.mount` to `/etc/systemd/system/`
-4. As root, `systemctl enable home-q3df-dfsv-game-nfs-maps.mount` and `systemctl start home-q3df-dfsv-game-nfs-maps.mount`
-5. As `q3df`, run `./install_defrag.sh` 
-6. Configure `sv.conf` to your liking.
-7. Once done, run `./start-servers.sh`.
-8. Connect to `your instance's ip:port` through a defrag client and verify if it works.
+3. As `q3df`, run `./install_defrag.sh` 
+4. Configure `sv.conf` to your liking.
+5. Once done, run `./start-servers.sh` to and verify if there are indeed screens ( `screen -r` should redirect you to the quake 3 console). 
+6. Try connecting to your server on your defrag client (`connect ip:port` in the console) to see if you can join it.
+7. As root, make a symlink of the NFS mount for custom maps (`sudo ln -s /home/q3df/dfsv/home-q3df-game-nfs-maps.mount /etc/systemd/system/home-q3df-game-nfs-maps.mount`) and start the service (`systemctl enable home-q3df-game-nfs-maps.mount && systemctl start home-q3df-game-nfs-maps.mount`)
+8. As root, make a symlink of the dfsv service to run it after each reboot (`sudo ln -s /home/q3df/dfsv/dfsv.service /etc/systemd/system/dfsv.service`) and start the service (`systemctl enable dfsv.service && systemctl start dfsv.service`)
+9. GLHF :)
+
+### Information for WSL2 users
+Due to how WSL2 works, it is important for users to modify one line inside the mounting service (`home-q3df-game-nfs-maps.mount`). Otherwise the NFS link won't start at all and all custom maps won't be accessible.
+
+Change this line :
+```
+Options=nolock,soft,timeo=30
+```
+
+to:
+
+```
+Options=noresvport,nolock,soft,timeo=30
+```
+
+Don't forget to make a daemon-reload and restart the service : `systemctl daemon-reload && systemctl restart home-q3df-game-nfs-maps.mount`
+
 
 **Customization**
 1. ssh into your instance
