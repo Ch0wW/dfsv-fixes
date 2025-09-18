@@ -55,7 +55,7 @@ Options=noresvport,nolock,soft,timeo=30
 Don't forget to make a daemon-reload and restart the service : `systemctl daemon-reload && systemctl restart home-q3df-game-nfs-maps.mount`
 
 
-**Customization**
+## Customization
 1. ssh into your instance
 2. run `cd ~/dfsv`
 3. run `nano sv.conf`
@@ -68,7 +68,7 @@ Don't forget to make a daemon-reload and restart the service : `systemctl daemon
 9. rerun `./launch-native.sh` and to apply changes
 10. run `ps aux | grep oDFe.ded` to see your running servers and their ports
 
-### Uploading maps
+## Uploading maps
 
 After following the previous steps, you will have all current maps on ws.q3df.org available on your server. However, if you'd like to upload custom maps or maps not present in world spawn, continue
 
@@ -94,3 +94,17 @@ From the instance OS:
 6. Choose the snapshot with the name you chose in step 4.
 7. Deploy. Once done installing, everything will be up but in your new location. Try connecting via defrag.
 8. Destroy unused instances to avoid unecessary billing.
+
+# Troubleshooting
+
+### I set `MDD_ENABLED` to 1, but my server suddenly doesn't run...
+You need to actually do a few more steps in order to use this feature, such as having unique rs_IDs, otherwise the server won't run. 
+
+Please go to the [defrag.racing](https://defrag.racing/) community for more information.
+
+### I see "VM_LoadDLL 'defrag/qagamei386.so' failed"...
+You might have libraries missing, but most likely `libmysqlclient.so.20` on your system. To verify what libraries you might not have, type this :
+
+```sh
+ldd ./game/defrag/qagamei386.so
+```
