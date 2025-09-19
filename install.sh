@@ -15,7 +15,7 @@ apt update
 apt -y install libc6:i386 libstdc++6:i386 libgcc1:i386 libncurses5:i386 libtinfo5:i386 zlib1g:i386
 
 echo "Installing libmysqlclient20 (i386)"
-dpkg -i .install/libmysqlclient20_5.7.21-1ubuntu1_i386.deb
+dpkg --unpack .install/libmysqlclient20_5.7.21-1ubuntu1_i386.deb
 
 echo "Required packages installed!"
 echo "Now, you can run ./install_defrag.sh as the non-root user to continue the installation."

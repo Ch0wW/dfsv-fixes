@@ -80,7 +80,7 @@ SERVER_SETTINGS=(
 
         # Execing files (in order: Global DF settings, the gamemode setting, the server cfg)
         +exec                   "cfgs/global.cfg"
-        +exec                   "cfgs/${SV_CONFIG}.cfg"
+        +exec                   "cfgs/${SV_TYPE}.cfg"
         +exec                   "${NAME_ID}/main.cfg"
 
 )

@@ -6,7 +6,7 @@ After=network.target
 What=173.212.241.188:/maps/bsp
 Where=/home/q3df/dfsv/game/nfs/maps
 Type=nfs
-Options=nolock,soft,timeo=30
+Options=nolock,noresvport,soft,timeo=30
 
 [Install]
 WantedBy=multi-user.target

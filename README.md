@@ -1,7 +1,7 @@
 Minimum requirements:
 - 64 bit Debian-based Linux system
-- 150 * # of servers MB of RAM
-- 1.5 GB of free storage
+- 150MB of RAM * # of servers
+- Around 2GB of free storage
 - NFS client support (nfs-common package)
 
 **Renting a VPS (*If you have your linux system ready, feel free skip ahead to the next section*)**
@@ -26,9 +26,20 @@ Options:
 - `ssh root@ipofyourinstance`
 - Enter the password, proceed to next section.
 
-## Deploying the servers (Native/No-Docker Method) - ADVANCED METHOD
+## Deploying the servers (Docker) - RECOMMENDED METHOD
+1. **Make sure Docker is installed**.
+2. Create a regular user called `q3df` (**very important**).
+3. Make sure `q3df` user has permissions to get the `docker` group. (`sudo usermod -aG docker q3df`). 
+4. Log as `q3df` and `git clone` this repository.
+5. Inside the folder, build the docker image (`docker build -t q3df .`).
+6. Once done, configure `sv.conf` to your likings.
+7. Run `generate_docker_service.sh` to generate a `docker-compose.override.yml` file. Review the data if necessary.
+8. Run `docker compose up -d` to run it in the background.
+9. Test if everything works properly by connecting to your server.
+10. GLHF :)
 
-1. Create a regular user called `q3df` (**very important**) 
+## Deploying the servers (Native/No-Docker Method) - ADVANCED METHOD
+1. Create a regular user called `q3df` (**very important**), log into that user and `git clone` this repository. 
 2. As root, run `./install.sh` to install all required packages 
 3. As `q3df`, run `./install_defrag.sh` 
 4. Configure `sv.conf` to your liking.
@@ -39,7 +50,7 @@ Options:
 9. GLHF :)
 
 ### Information for WSL2 users
-Due to how WSL2 works, it is important for users to modify one line inside the mounting service (`home-q3df-game-nfs-maps.mount`). Otherwise the NFS link won't start at all and all custom maps won't be accessible.
+Due to how WSL2 works, it is important for users to modify one line inside the mounting service (`home-q3df-game-nfs-maps.mount`). Otherwise the NFS link won't start at all and all custom maps won't be accessible on your server.
 
 Change this line :
 ```
@@ -83,7 +94,7 @@ From the instance OS:
 1. run `cd ~/dfsv/maps`
 2. run `wget link-to-map`
 3. Restart your server from the game by callvoting the current map.
-4. Callvote your map
+4. Callvote your map.
 
 ### Quickly migrating to a new location while keeping settings
 1. Once you have all your desired settings, you can create a snapshot for free (at the time of this writeup) on vultr.
@@ -108,3 +119,6 @@ You might have libraries missing, but most likely `libmysqlclient.so.20` on your
 ```sh
 ldd ./game/defrag/qagamei386.so
 ```
+
+### I see Sys_Error: Unable to create directory "/server/.q3a", error is Permission denied(13)
+Simply recreate a folder named `.q3a` within the `game` folder. 
