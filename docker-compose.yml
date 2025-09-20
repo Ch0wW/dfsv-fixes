@@ -6,10 +6,15 @@
 
 #===============================
 volumes:
-  base:
+  base_baseq3:
     driver_opts:
       type: none
-      device: ${PWD}/game/defrag
+      device: ${PWD}/game/baseq3/
+      o: bind
+  base_defrag:
+    driver_opts:
+      type: none
+      device: ${PWD}/game/defrag/
       o: bind
   maps:
     driver_opts:

@@ -18,30 +18,14 @@ RUN rm /server/libmysqlclient20_5.7.21-1ubuntu1_i386.deb
 
 # 5) Now work on the folder...
 USER q3df
-RUN mkdir -p /server/baseq3
-RUN mkdir /tmp/defraginstall
-WORKDIR /tmp/defraginstall
+WORKDIR /server
 
-# 6) Install Quake3's basefolder & oDFe
-RUN wget https://dl.defrag.racing/downloads/dfsv.tar
-RUN tar -xvf dfsv.tar
-RUN mv dfsv/*.dat /server/
-RUN mv dfsv/baseq3/* /server/baseq3
-
-# 7) Get latest oDFe build from defrag racing
+# 6) Get latest oDFe build from defrag racing
 RUN wget https://dl.defrag.racing/downloads/oDFe.ded
-RUN mv oDFe.ded /server/
 RUN chmod +x /server/oDFe.ded
-
-# 8) Now delete /tmp/defraginstall
-RUN rm -rf /tmp/defraginstall
 
 # 9) Copy the start script and the initial maps for DF
 COPY game/start.sh /server/start.sh
-
-COPY game/baseq3/amt-freestyle6.pk3 /server/baseq3/
-COPY game/baseq3/ojdf-sa.pk3 /server/baseq3/
-COPY game/baseq3/st1.pk3 /server/baseq3/
 
 ENV TERM xterm
 ENTRYPOINT ["./start.sh"]

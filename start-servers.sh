@@ -20,8 +20,6 @@ printf "\nServer Hostname: $SV_BASE_HOSTNAME\nAdmin: $ADMIN_NAME\nRcon Password:
 echo "Setting up native server environment..."
 
 currdir=$(pwd)
-
-curr_port=27960
 echo "Starting servers natively..."
 
 for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
@@ -33,12 +31,12 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 		# Always come back here
 		cd $currdir
 
-		curr_id="rs${curr_port}"
+		curr_id="rs${SERVER_STARTPORT}"
 		i=$(($i+1))
 		curr_name="${sv_type}_${i}"
 		curr_hostname="${SV_BASE_HOSTNAME} ${!sv_sfx} ${i}"
 
-		echo "Starting server: ${curr_name} on port ${curr_port}"
+		echo "Starting server: ${curr_name} on port ${SERVER_STARTPORT}"
 
 		# Create server-specific directory
 		mkdir -p ./game/defrag/$curr_name
@@ -51,7 +49,7 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 		export SV_HOSTNAME="${curr_hostname}"
 		export SV_RCON=${SV_RCON}
 		export SV_LOCATION=${SV_LOCATION}
-		export SV_PORT=${curr_port}
+		export SV_PORT=${SERVER_STARTPORT}
 		export ADMIN_NAME=${ADMIN_NAME}
 		export ADMIN_MAIL=${ADMIN_MAIL}
 		export ADMIN_DISCORD=${ADMIN_DISCORD}
@@ -63,7 +61,7 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 		export SV_CONFIG=${sv_type}
 		(cd game && screen -mdS "${sv_type}_${i}" ./start.sh)
 
-		curr_port=$(($curr_port+1))
+		SERVER_STARTPORT=$(($SERVER_STARTPORT+1))
 	done
 done
 

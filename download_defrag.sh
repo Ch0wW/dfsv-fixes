@@ -32,24 +32,22 @@ chmod +x $basedir/oDFe.ded
 echo "Downloading the latest defrag mod-release..."
 wget --no-check-certificate $(wget --spider -r --no-parent --no-check-certificate https://q3defrag.org/files/defrag/ 2>&1 | grep -E "\-\-2" | grep "defrag_" | grep -v "beta" | cut -d' ' -f4 | sort | tail -n1)
 unzip -o defrag*.zip
-mkdir $basedir/defrag/
+mkdir -p $basedir/defrag/serverdemos
 mv defrag/zz-* $basedir/defrag/
 
 # get recordsystem modules
 echo "Downloading the community modules..."
 wget https://dl.defrag.racing/downloads/rs.tar
 tar -xvf rs.tar
-
-# Move the modules subfolder...
-mv rs/defrag/modules $basedir/defrag/ 
-
-# And also the qagame binary.
-mv rs/defrag/qagame* $basedir/defrag/qagamei386.so
+cp rs/defrag/modules/* $basedir/defrag/ 
+cp rs/defrag/qagame* $basedir/defrag/qagamei386.so
 
 cd $installdir
 rm -rf $tmpdir
 
-echo "Installation done!"
-echo "You can now edit sv.conf to your likings, and start start-servers.sh"
+echo "Installation done! You can now edit sv.conf to your likings."
+
+echo "If you are using a Docker installation, generate the docker-compose file by running generate_docker_service.sh"
+echo "If you are using a local installation, run start-servers.sh"
 
 exit 0
