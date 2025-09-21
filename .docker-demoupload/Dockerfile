@@ -1,6 +1,6 @@
 from alpine:latest
 
-RUN apk add --update --no-cache wget openssh-client bash
+RUN apk add --update --no-cache wget openssh-client bash sshpass
 
 # create the group and user
 RUN mkdir /server

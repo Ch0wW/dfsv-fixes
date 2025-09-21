@@ -18,7 +18,7 @@ fi
 
 # Function to upload demos and preserve folder structure
 upload_demos() {
-    local base_path=${DEMO_SFTP_LOCAL_DIRECTORY}
+    local base_path=${DEMO_SFTP_LOCAL_DIRECTORY:-.}
 
     # Find all demo files excluding tmp folders
     find "$base_path" -name "*.dm_68" -o -name "*.dm_*" | grep -v "/tmp/" | while read -r demo_file; do
