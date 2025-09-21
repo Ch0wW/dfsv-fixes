@@ -76,16 +76,18 @@ if [[ -z ${DEMO_SFTP_USER} || -z ${DEMO_SFTP_PASS} ]] ; then
     exit 1
 fi
 
-printf "
-  demos_upload:
-    image: q3df
+printf `
+  q3df-demoupload:
+    image: q3df-demoupload
     build: ./docker-demoupload
     restart: always
     environment:
       - DEMO_SFTP_ENABLED=${DEMO_SFTP_ENABLED}
       - DEMO_SFTP_USER=${DEMO_SFTP_USER}
       - DEMO_SFTP_PASS=${DEMO_SFTP_PASS}
-    ">> docker-compose.override.yml 2>&1
+      - DEMO_SFTP_HOST=${DEMO_SFTP_HOST}
+      - DEMO_SFTP_REMOTEDIR=${DEMO_SFTP_REMOTEDIR}
+    `>> docker-compose.override.yml 2>&1
 
 
 

@@ -6,13 +6,13 @@ if [[ -z "${DEMO_SFTP_ENABLED}" || "${DEMO_SFTP_ENABLED}" -eq 0 ]] ; then
 fi
 
 if [[ -z "${DEMO_SFTP_USER}" || -z "${DEMO_SFTP_PASS}" ]] ; then
-    echo "Missing credentials for automatic demo uploading, skipping..."
+    echo "Missing credentials for automatic demo uploading (DEMO_SFTP_USER / DEMO_SFTP_PASS), skipping..."
     exit 1
 fi
 
 # Check if .env file exists and has required variables
-if [[ -z "${DEMO_SFTP_ENABLED}" || -z "$DEMO_SFTP_USER" || -z "$DEMO_SFTP_PASS" || -z "$DEMO_SFTP_RPATH" ]]; then
-    echo "Error: Missing credentials."
+if [[ -z "$DEMO_SFTP_REMOTEDIR" ]]; then
+    echo "Error: Missing DEMO_SFTP_REMOTEDIR."
     exit 1
 fi
 
@@ -27,7 +27,7 @@ upload_demos() {
         remote_dir=$(dirname "${relative_path}")
 
         echo "Uploading: $demo_file"
-        echo "To: ${DEMO_SFTP_RPATH}/${relative_path}"
+        echo "To: ${DEMO_SFTP_REMOTEDIR}/${relative_path}"
 
         # Create SFTP batch commands
         sftp_commands=$(mktemp)
@@ -36,7 +36,7 @@ upload_demos() {
         if [[ "$remote_dir" != "." ]]; then
             # Split path and create each directory level
             IFS='/' read -ra DIRS <<< "${remote_dir}"
-            current_path="${DEMO_SFTP_RPATH}"
+            current_path="${DEMO_SFTP_REMOTEDIR}"
             for dir in "${DIRS[@]}"; do
                 current_path="${current_path}/${dir}"
                 echo "mkdir \"${current_path}\"" >> "${sftp_commands}"
@@ -44,7 +44,7 @@ upload_demos() {
         fi
 
         # Upload the file
-        echo "put \"${demo_file}\" \"${DEMO_SFTP_RPATH}/${relative_path}\"" >> "${sftp_commands}"
+        echo "put \"${demo_file}\" \"${DEMO_SFTP_REMOTEDIR}/${relative_path}\"" >> "${sftp_commands}"
         echo "quit" >> "${sftp_commands}"
 
         # Execute SFTP upload
