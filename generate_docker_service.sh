@@ -12,8 +12,7 @@ COUNTER=0
 source sv.conf
 echo "Checking sv.conf for required settings..."
 for CONFIGURABLE in SV_BASE_HOSTNAME SV_RCON SV_LOCATION ADMIN_NAME; do
-	if [[ "${!CONFIGURABLE}" = "" ]]
-	then
+	if [[ "${!CONFIGURABLE}" = "" ]] ; then
 		read -p "Enter $CONFIGURABLE: " $CONFIGURABLE
 	fi
 done
@@ -68,12 +67,26 @@ for sv_type in mixed cpm vq3 fastcaps teamruns freestyle;do
 done
 
 # Check if .env file exists and has required variables
-if [[ -z "$DEMO_SFTP_ENABLED"]]; then
+if [[ -z ${DEMO_SFTP_ENABLED} || ${DEMO_SFTP_ENABLED} -eq 0 ]] ; then
     exit 1
 fi
 
-if [[ -z "$DEMO_SFTP_USER" || -z "$DEMO_SFTP_PASS" ]]; then
+if [[ -z ${DEMO_SFTP_USER} || -z ${DEMO_SFTP_PASS} ]] ; then
     echo "Missing credentials for automatic demo uploading, skipping..."
     exit 1
 fi
 
+printf "
+  demos_upload:
+    image: q3df
+    build: ./docker-demoupload
+    restart: always
+    environment:
+      - DEMO_SFTP_ENABLED=${DEMO_SFTP_ENABLED}
+      - DEMO_SFTP_USER=${DEMO_SFTP_USER}
+      - DEMO_SFTP_PASS=${DEMO_SFTP_PASS}
+    ">> docker-compose.override.yml 2>&1
+
+
+
+    

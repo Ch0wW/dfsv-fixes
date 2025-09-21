@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y wget gnupg unionfs-fuse lsb-release ine
 RUN apt-get install -y libxml2:i386 
 
 # 3) Create user for the folder /server that'll be used later
-RUN groupadd -r q3df
-RUN useradd --no-log-init --system --create-home --home-dir /server --gid q3df q3df
+RUN groupadd -r q3user
+RUN useradd --no-log-init --system --create-home --home-dir /server --gid q3user q3user
 
 # 4) Install libmysqlclient20 (important for modules)
 COPY .install/libmysqlclient20_5.7.21-1ubuntu1_i386.deb /server
@@ -17,7 +17,7 @@ RUN dpkg --unpack /server/libmysqlclient20_5.7.21-1ubuntu1_i386.deb
 RUN rm /server/libmysqlclient20_5.7.21-1ubuntu1_i386.deb
 
 # 5) Now work on the folder...
-USER q3df
+USER q3user
 WORKDIR /server
 
 # 6) Get latest oDFe build from defrag racing
