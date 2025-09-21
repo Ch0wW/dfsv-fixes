@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check if .env file exists and has required variables
 if [[ -z "${DEMO_SFTP_ENABLED}" || "${DEMO_SFTP_ENABLED}" -eq 0 ]] ; then
