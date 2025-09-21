@@ -78,8 +78,7 @@ fi
 
 printf "
   q3df-demoupload:
-    image: q3df-demoupload
-    build: ./docker-demoupload
+    build: ./.docker-demoupload
     restart: always
     environment:
       - DEMO_SFTP_ENABLED=${DEMO_SFTP_ENABLED}
