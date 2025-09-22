@@ -88,7 +88,16 @@ From the instance OS:
 7. Deploy. Once done installing, everything will be up but in your new location. Try connecting via defrag.
 8. Destroy unused instances to avoid unecessary billing.
 
-#
+# Auto-uploading demos (Dockerless only)
+
+```sh
+crontab -e
+```
+
+You can add an entry like that:
+```
+*/30 * * * * cd ~/dfsv && bash ./.docker-demoupload/upload_demos.sh
+```
 
 # Troubleshooting
 
