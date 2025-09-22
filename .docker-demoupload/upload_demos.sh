@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source sv.conf
+
 # Check if .env file exists and has required variables
 if [[ -z "${DEMO_SFTP_ENABLED}" || "${DEMO_SFTP_ENABLED}" -eq 0 ]] ; then
     exit 1
