@@ -76,6 +76,11 @@ if [[ -z ${DEMO_SFTP_USER} || -z ${DEMO_SFTP_PASS} ]] ; then
     exit 1
 fi
 
+if [[ -z ${DEMO_SFTP_REMOTEDIR} ]] ; then
+    echo "Missing Remote directory for SFTP, skipping..."
+    exit 1
+fi
+
 printf "
   q3df-demoupload:
     build: ./.docker-demoupload
