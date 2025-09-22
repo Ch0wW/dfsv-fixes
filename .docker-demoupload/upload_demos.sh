@@ -17,51 +17,48 @@ if [[ -z "$DEMO_SFTP_REMOTEDIR" ]]; then
 fi
 
 # Function to upload demos and preserve folder structure
-upload_demos() {
-    local base_path=${DEMO_SFTP_LOCAL_DIRECTORY:-.}
+base_path=${DEMO_SFTP_LOCAL_DIRECTORY:-./game/defrag/}
 
-    # Find all demo files excluding tmp folders
-    find "$base_path" -name "*.dm_68" -o -name "*.dm_*" | grep -v "/tmp/" | while read -r demo_file; do
-        # Get relative path from base demo directory
-        relative_path=${demo_file#$base_path/}
-        remote_dir=$(dirname "${relative_path}")
+# Find all demo files excluding tmp folders
+find "$base_path" -name "*.dm_68" -o -name "*.dm_*" | grep -v "/tmp/" | while read -r demo_file; do
+    # Get relative path from base demo directory
+    relative_path=${demo_file#$base_path/}
+    remote_dir=$(dirname "${relative_path}")
 
-        echo "Uploading: $demo_file"
-        echo "To: ${DEMO_SFTP_REMOTEDIR}/${relative_path}"
+    echo "Found demo file at filepath: $demo_file"
+    echo "Uploading file to: ${DEMO_SFTP_REMOTEDIR}/${relative_path}"
 
-        # Create SFTP batch commands
-        sftp_commands=$(mktemp)
+    # Create SFTP batch commands
+    sftp_commands=$(mktemp)
 
-        # Create remote directory structure if needed
-        if [[ "$remote_dir" != "." ]]; then
-            # Split path and create each directory level
-            IFS='/' read -ra DIRS <<< "${remote_dir}"
-            current_path="${DEMO_SFTP_REMOTEDIR}"
-            for dir in "${DIRS[@]}"; do
-                current_path="${current_path}/${dir}"
-                echo "mkdir \"${current_path}\"" >> "${sftp_commands}"
-            done
-        fi
+    # Create remote directory structure if needed
+    if [[ "$remote_dir" != "." ]]; then
+        # Split path and create each directory level
+        IFS='/' read -ra DIRS <<< "${remote_dir}"
+        current_path="${DEMO_SFTP_REMOTEDIR}"
+        for dir in "${DIRS[@]}"; do
+            current_path="${current_path}/${dir}"
+            echo "mkdir \"${current_path}\"" >> "${sftp_commands}"
+        done
+    fi
 
-        # Upload the file
-        echo "put \"${demo_file}\" \"${DEMO_SFTP_REMOTEDIR}/${relative_path}\"" >> "${sftp_commands}"
-        echo "quit" >> "${sftp_commands}"
+    # Upload the file
+    echo "put \"${demo_file}\" \"${DEMO_SFTP_REMOTEDIR}/${relative_path}\"" >> "${sftp_commands}"
+    echo "quit" >> "${sftp_commands}"
 
-        # Execute SFTP upload
-        if sshpass -p "$DEMO_SFTP_PASS" sftp -o StrictHostKeyChecking=no -P "${DEMO_SFTP_PORT}" "${DEMO_SFTP_USER}@${DEMO_SFTP_HOST}" < "${sftp_commands}"; then
-            echo "Successfully uploaded: $relative_path"
-            # Delete the source file after successful upload
-            rm "${demo_file}"
-            echo "Deleted source file: ${demo_file}"
-        else
-            echo "Failed to upload: ${relative_path}"
-        fi
+    # Execute SFTP upload
+    if sshpass -p "$DEMO_SFTP_PASS" sftp -o StrictHostKeyChecking=no -P "${DEMO_SFTP_PORT}" "${DEMO_SFTP_USER}@${DEMO_SFTP_HOST}" < "${sftp_commands}"; then
+        echo "Successfully uploaded: $relative_path"
+        # Delete the source file after successful upload
+        rm "${demo_file}"
+        echo "Deleted source file: ${demo_file}"
+    else
+        echo "Failed to upload: ${relative_path}"
+        exit 1
+    fi
 
-        # Clean up temp file
-        rm "${sftp_commands}"
-    done
-}
+    # Clean up temp file
+    rm "${sftp_commands}"
+done
 
-echo "Starting demo upload process..."
-upload_demos
 echo "Demo upload process completed."

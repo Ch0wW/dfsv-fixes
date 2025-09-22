@@ -80,15 +80,14 @@ printf "
   q3df-demoupload:
     build: ./.docker-demoupload
     restart: always
+    volumes:
+      - base_baseq3:/server/baseq3/
+      - base_defrag:/server/defrag/
     environment:
       - DEMO_SFTP_ENABLED=${DEMO_SFTP_ENABLED}
-      - DEMO_SFTP_HOST=\"${DEMO_SFTP_HOST}\"
-      - DEMO_SFTP_PORT=\"${DEMO_SFTP_PORT}\"
-      - DEMO_SFTP_USER=\"${DEMO_SFTP_USER}\"
-      - DEMO_SFTP_PASS=\"${DEMO_SFTP_PASS}\"
+      - DEMO_SFTP_HOST=${DEMO_SFTP_HOST}
+      - DEMO_SFTP_PORT=${DEMO_SFTP_PORT}
+      - DEMO_SFTP_USER=${DEMO_SFTP_USER}
+      - DEMO_SFTP_PASS=${DEMO_SFTP_PASS}
       - DEMO_SFTP_REMOTEDIR=${DEMO_SFTP_REMOTEDIR}
     ">> docker-compose.override.yml 2>&1
-
-
-
-    
